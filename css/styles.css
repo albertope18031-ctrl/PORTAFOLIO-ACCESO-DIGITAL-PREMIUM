@@ -665,6 +665,137 @@ ul {
 }
 
 /* ==========================================================================
+   COREOGRAFÍA HERO REVEAL (ORQUESTACIÓN DE ENTRADA DE ALTO RENDIMIENTO)
+   Curva: cubic-bezier(0.16, 1, 0.3, 1) | LCP = 0 delay | CLS = 0 | GPU Composite
+   ========================================================================== */
+
+/* 1. Navbar / Header superior: fade-in sutil desde arriba (y: -10px -> 0, opacity: 0 -> 1) */
+.hero-reveal-active .site-header {
+  animation: heroRevealNavbar 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0s both;
+  will-change: transform, opacity;
+}
+
+/* 2. Isotipo / Emblema de marca: fade-in con micro-escala (scale: 0.95 -> 1.0, opacity: 0 -> 1) */
+.hero-reveal-active .hero-badge-pill,
+.hero-reveal-active .brand-crest {
+  animation: heroRevealEmblem 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.09s both;
+  will-change: transform, opacity;
+}
+
+/* 3. Titular principal (H1): reveal con ligero desplazamiento vertical (y: 20px -> 0, opacity: 0 -> 1) */
+.hero-reveal-active .hero-headline {
+  animation: heroRevealHeadline 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both;
+  will-change: transform, opacity;
+}
+
+/* 4. Subtítulo / Propuesta de valor: fade-up coordinado (y: 15px -> 0, opacity: 0 -> 1) */
+.hero-reveal-active .hero-description {
+  animation: heroRevealSubtitle 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.27s both;
+  will-change: transform, opacity;
+}
+
+/* 5. Botones de acción (CTAs): fade-up final (y: 10px -> 0, opacity: 0 -> 1) */
+.hero-reveal-active .hero-actions {
+  animation: heroRevealActions 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.36s both;
+  will-change: transform, opacity;
+}
+
+/* Cintillo de validación / métricas agregadas y carrusel continuo */
+.hero-reveal-active .hero-metrics-bar {
+  animation: heroRevealMetrics 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+  will-change: transform, opacity;
+}
+
+.hero-reveal-active .clients-ticker-wrap {
+  animation: heroRevealMetrics 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.52s both;
+  will-change: transform, opacity;
+}
+
+/* --- Keyframes con Aceleración por Hardware (GPU Composite sin repintado) --- */
+@keyframes heroRevealNavbar {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroRevealEmblem {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes heroRevealHeadline {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroRevealSubtitle {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroRevealActions {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroRevealMetrics {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accesibilidad a11y: Desactivar animaciones si el usuario prefiere movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .hero-reveal-active .site-header,
+  .hero-reveal-active .hero-badge-pill,
+  .hero-reveal-active .brand-crest,
+  .hero-reveal-active .hero-headline,
+  .hero-reveal-active .hero-description,
+  .hero-reveal-active .hero-actions,
+  .hero-reveal-active .hero-metrics-bar,
+  .hero-reveal-active .clients-ticker-wrap {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    will-change: auto !important;
+  }
+}
+
+/* ==========================================================================
    MATRIZ DE SERVICIOS ESTRATÉGICOS
    ========================================================================== */
 .services-grid {

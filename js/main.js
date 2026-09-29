@@ -5,6 +5,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
   // Inicializaciones
+  initHeroReveal();
   initNavigation();
   initProjectsGallery();
   initPsrModal();
@@ -12,6 +13,29 @@ document.addEventListener('DOMContentLoaded', () => {
   initWhatsAppWidget();
   initLegalModals();
 });
+
+/* ==========================================================================
+   0. HERO REVEAL - ORQUESTACIÓN DE ENTRADA Y PERSISTENCIA POR SESIÓN
+   ========================================================================== */
+function initHeroReveal() {
+  const isAnimated = sessionStorage.getItem('adp_hero_animated');
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Si ya se reprodujo en esta sesión o el usuario prefiere movimiento reducido, desactivar inmediatamente
+  if (isAnimated || prefersReduced) {
+    document.documentElement.classList.remove('hero-reveal-active');
+    return;
+  }
+
+  // Registrar en sessionStorage para evitar repetir la animación en la misma sesión de navegación
+  sessionStorage.setItem('adp_hero_animated', 'true');
+
+  // Limpiar la clase de orquestación al finalizar la secuencia (1.2s)
+  // para liberar capas de composición en GPU y permitir estados nativos de hover/scroll
+  setTimeout(() => {
+    document.documentElement.classList.remove('hero-reveal-active');
+  }, 1200);
+}
 
 /* ==========================================================================
    1. NAVEGACIÓN Y CABECERA FLOTANTE

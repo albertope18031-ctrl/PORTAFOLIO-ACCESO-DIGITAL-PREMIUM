@@ -43,8 +43,8 @@
   <link rel="preload" as="image" href="assets/clients/mobile/aura-beauty.webp?v=3.2" media="(max-width: 640px)" type="image/webp">
 
   <!-- Hojas de Estilos con Invalidación Forzada de Caché -->
-  <link rel="stylesheet" href="css/variables.css?v=3.2">
-  <link rel="stylesheet" href="css/styles.css?v=3.2">
+  <link rel="stylesheet" href="css/variables.css?v=3.3">
+  <link rel="stylesheet" href="css/styles.css?v=3.3">
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -63,6 +63,19 @@
       "Ingeniería de Conversión B2B"
     ]
   }
+  </script>
+
+  <!-- Hero Reveal: Verificación síncrona en head (Cero FOUC, Cero Retraso LCP, Respeta a11y) -->
+  <script>
+    (function() {
+      try {
+        var isAnimated = sessionStorage.getItem('adp_hero_animated');
+        var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!isAnimated && !prefersReduced) {
+          document.documentElement.classList.add('hero-reveal-active');
+        }
+      } catch (e) {}
+    })();
   </script>
 </head>
 <body>
@@ -1038,7 +1051,7 @@
   </div>
 
   <!-- Scripts con Invalidación Forzada de Caché -->
-  <script src="js/data-projects.js?v=3.2"></script>
-  <script src="js/main.js?v=3.2"></script>
+  <script src="js/data-projects.js?v=3.3"></script>
+  <script src="js/main.js?v=3.3"></script>
 </body>
 </html>
