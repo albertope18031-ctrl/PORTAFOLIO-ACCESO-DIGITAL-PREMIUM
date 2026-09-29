@@ -312,10 +312,9 @@ function initFunnelForm() {
   // Paso 2 -> Paso 3
   btnNext2.addEventListener('click', () => {
     const projectType = document.querySelector('#leadProjectType').value;
-    const budget = document.querySelector('#leadBudget').value;
 
-    if (!projectType || !budget) {
-      alert('Por favor especifique el tipo de desarrollo y rango de inversión estimado.');
+    if (!projectType) {
+      alert('Por favor seleccione una opción en el tipo de solución requerida (puede elegir la opción de asesoría si no está seguro).');
       return;
     }
 
@@ -337,14 +336,50 @@ function initFunnelForm() {
     indicator2.classList.add('active');
   });
 
-  // Envío Final
+  // Envío Final - Automatización hacia WhatsApp (6624175122)
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+
+    const name = document.querySelector('#leadName').value.trim();
+    const email = document.querySelector('#leadEmail').value.trim();
+    const company = document.querySelector('#leadCompany').value.trim();
+    const url = document.querySelector('#leadUrl').value.trim();
+
+    const projectTypeSelect = document.querySelector('#leadProjectType');
+    const projectTypeText = projectTypeSelect && projectTypeSelect.selectedIndex >= 0
+      ? projectTypeSelect.options[projectTypeSelect.selectedIndex].text
+      : 'No especificado';
+
+    const timelineSelect = document.querySelector('#leadTimeline');
+    const timelineText = timelineSelect && timelineSelect.selectedIndex >= 0
+      ? timelineSelect.options[timelineSelect.selectedIndex].text
+      : 'No especificado';
 
     const challenge = document.querySelector('#leadChallenge').value.trim();
     if (!challenge) {
       alert('Por favor descríbanos brevemente el reto o barrera de su proyecto.');
       return;
+    }
+
+    // Construcción del mensaje estructurado para WhatsApp
+    const waText = 
+      `*🚀 NUEVA SOLICITUD DE DIAGNÓSTICO WEB*%0A` +
+      `*Acceso Digital Premium*%0A%0A` +
+      `👤 *Nombre:* ${encodeURIComponent(name)}%0A` +
+      `📧 *Correo Corporativo:* ${encodeURIComponent(email)}%0A` +
+      `🏢 *Empresa / Negocio:* ${encodeURIComponent(company)}%0A` +
+      `🌐 *Sitio Web Actual:* ${encodeURIComponent(url || 'Ninguno / Proyecto desde cero')}%0A` +
+      `🎯 *Tipo de Solución:* ${encodeURIComponent(projectTypeText)}%0A` +
+      `⏱️ *Tiempo Estimado:* ${encodeURIComponent(timelineText)}%0A` +
+      `📝 *Reto o Necesidad a Resolver:*%0A${encodeURIComponent(challenge)}`;
+
+    const whatsappUrl = `https://wa.me/526624175122?text=${waText}`;
+
+    // Disparar automáticamente apertura a WhatsApp
+    try {
+      window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+    } catch (err) {
+      console.warn('Bloqueo de ventana emergente:', err);
     }
 
     // Ocultar etapas y mostrar confirmación inmediata
@@ -353,8 +388,12 @@ function initFunnelForm() {
     successBox.style.display = 'block';
 
     const clientName = document.querySelector('#leadName').value.trim();
-    const company = document.querySelector('#leadCompany').value.trim();
     document.querySelector('#successClientName').textContent = clientName;
+
+    const successWaBtn = document.querySelector('#formSuccessWaBtn');
+    if (successWaBtn) {
+      successWaBtn.href = whatsappUrl;
+    }
 
     // Scroll suave al contenedor de éxito
     document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth' });
@@ -368,13 +407,20 @@ function initWhatsAppWidget() {
   const trigger = document.querySelector('#waTrigger');
   const popover = document.querySelector('#waPopover');
   const closePopover = document.querySelector('#waClose');
+  const floatingLabel = document.querySelector('#waFloatingLabel');
 
   if (!trigger || !popover) return;
 
-  trigger.addEventListener('click', (e) => {
-    e.stopPropagation();
+  function togglePopover(e) {
+    if (e) e.stopPropagation();
     popover.classList.toggle('open');
-  });
+  }
+
+  trigger.addEventListener('click', togglePopover);
+
+  if (floatingLabel) {
+    floatingLabel.addEventListener('click', togglePopover);
+  }
 
   if (closePopover) {
     closePopover.addEventListener('click', (e) => {
@@ -384,7 +430,7 @@ function initWhatsAppWidget() {
   }
 
   document.addEventListener('click', (e) => {
-    if (!popover.contains(e.target) && !trigger.contains(e.target)) {
+    if (!popover.contains(e.target) && !trigger.contains(e.target) && (!floatingLabel || !floatingLabel.contains(e.target))) {
       popover.classList.remove('open');
     }
   });
