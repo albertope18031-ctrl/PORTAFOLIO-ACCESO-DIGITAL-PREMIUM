@@ -64,78 +64,34 @@ function initProjectsGallery() {
   const gridContainer = document.querySelector('#projectsGrid');
   const filterBtns = document.querySelectorAll('.filter-btn');
 
-  if (!gridContainer || typeof PROJECTS_DATA === 'undefined') return;
+  if (!gridContainer) return;
 
-  function renderProjects(category = 'all') {
-    gridContainer.innerHTML = '';
+  const existingCards = gridContainer.querySelectorAll('.project-card');
 
-    const filtered = category === 'all' 
-      ? PROJECTS_DATA 
-      : PROJECTS_DATA.filter(p => p.category === category);
-
-    filtered.forEach(project => {
-      const card = document.createElement('article');
-      card.className = 'project-card';
-      card.setAttribute('data-category', project.category);
-
-      const techBadges = project.techStack
-        .slice(0, 3)
-        .map(tech => `<span class="tech-tag">${tech}</span>`)
-        .join('');
-
-      card.innerHTML = `
-        <div class="project-media-wrap">
-          <img src="${project.logo}" alt="${project.title}" class="project-media-img" loading="lazy" decoding="async" width="960" height="524">
-          <span class="project-category-tag">${project.categoryLabel}</span>
-          <div class="project-live-indicator">
-            <span class="live-dot"></span> En Producción
-          </div>
-        </div>
-        <div class="project-card-body">
-          <h3 class="project-title">${project.title}</h3>
-          <p class="project-subtitle">${project.subtitle}</p>
-          
-          <div class="project-metric-box">
-            <span class="project-metric-val">${project.metricHighlight}</span>
-            <span class="project-metric-desc">${project.metricLabel}</span>
-          </div>
-
-          <div class="project-tech-tags">
-            ${techBadges}
-          </div>
-
-          <div class="project-card-actions">
-            <button class="btn-case-psr" data-project-id="${project.id}" aria-label="Ver Caso de Estudio ${project.title}">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-              Caso PSR
-            </button>
-            <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn-live-link" aria-label="Visitar sitio ${project.title}">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-              Sitio en Vivo
-            </a>
-          </div>
-        </div>
-      `;
-
-      gridContainer.appendChild(card);
+  // Filtrado instantáneo por CSS display sin recargar ni destruir el DOM
+  function filterProjects(category = 'all') {
+    existingCards.forEach(card => {
+      const cardCategory = card.getAttribute('data-category');
+      if (category === 'all' || cardCategory === category) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
     });
-
-    // Reasignar eventos a los botones de Caso PSR
-    attachPsrModalTriggers();
   }
 
-  // Filtrado al hacer clic
+  // Filtrado al hacer clic en chips de categoría
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const category = btn.getAttribute('data-filter');
-      renderProjects(category);
+      filterProjects(category);
     });
   });
 
-  // Render inicial
-  renderProjects('all');
+  // Asignar eventos a los botones de Caso PSR y vistas previas
+  attachPsrModalTriggers();
 }
 
 /* ==========================================================================
@@ -171,84 +127,101 @@ function initPsrModal() {
 
 function attachPsrModalTriggers() {
   const modal = document.querySelector('#psrModal');
-  const triggers = document.querySelectorAll('.btn-case-psr');
   const contentContainer = document.querySelector('#psrModalContent');
 
   if (!modal || !contentContainer) return;
 
-  triggers.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const projectId = btn.getAttribute('data-project-id');
-      const project = PROJECTS_DATA.find(p => p.id === projectId);
-      if (!project) return;
+  function openProjectModal(projectId) {
+    const project = PROJECTS_DATA.find(p => p.id === projectId);
+    if (!project) return;
 
-      const techBadges = project.techStack
-        .map(tech => `<span class="tech-tag">${tech}</span>`)
-        .join('');
+    const techBadges = project.techStack
+      .map(tech => `<span class="tech-tag">${tech}</span>`)
+      .join('');
 
-      contentContainer.innerHTML = `
-        <div class="psr-modal-header">
-          <span class="psr-badge">${project.categoryLabel}</span>
-          <h2 class="psr-modal-title">${project.title}</h2>
-          <p class="psr-modal-subtitle">${project.subtitle}</p>
+    contentContainer.innerHTML = `
+      <div class="psr-modal-header">
+        <span class="psr-badge">${project.categoryLabel}</span>
+        <h2 class="psr-modal-title">${project.title}</h2>
+        <p class="psr-modal-subtitle">${project.subtitle}</p>
+      </div>
+
+      <!-- PROBLEMA -->
+      <div class="psr-section-block">
+        <div class="psr-section-heading">
+          <span class="psr-icon-tag tag-problem">P</span>
+          Diagnóstico Inicial & Ineficiencias Comerciales
         </div>
+        <p class="psr-text">${project.psr.problem}</p>
+      </div>
 
-        <!-- PROBLEMA -->
-        <div class="psr-section-block">
-          <div class="psr-section-heading">
-            <span class="psr-icon-tag tag-problem">P</span>
-            Diagnóstico Inicial & Ineficiencias Comerciales
-          </div>
-          <p class="psr-text">${project.psr.problem}</p>
+      <!-- SOLUCIÓN -->
+      <div class="psr-section-block">
+        <div class="psr-section-heading">
+          <span class="psr-icon-tag tag-solution">S</span>
+          Arquitectura Técnica & Estrategia de Conversión Desplegada
         </div>
-
-        <!-- SOLUCIÓN -->
-        <div class="psr-section-block">
-          <div class="psr-section-heading">
-            <span class="psr-icon-tag tag-solution">S</span>
-            Arquitectura Técnica & Estrategia de Conversión Desplegada
-          </div>
-          <p class="psr-text">${project.psr.solution}</p>
-          <div class="project-tech-tags" style="margin-top: 1rem;">
-            ${techBadges}
-          </div>
+        <p class="psr-text">${project.psr.solution}</p>
+        <div class="project-tech-tags" style="margin-top: 1rem;">
+          ${techBadges}
         </div>
+      </div>
 
-        <!-- RESULTADOS -->
-        <div class="psr-section-block">
-          <div class="psr-section-heading">
-            <span class="psr-icon-tag tag-results">R</span>
-            Rendimiento Cuantificable & Retorno de Inversión
+      <!-- RESULTADOS -->
+      <div class="psr-section-block">
+        <div class="psr-section-heading">
+          <span class="psr-icon-tag tag-results">R</span>
+          Rendimiento Cuantificable & Retorno de Inversión
+        </div>
+        <div class="psr-results-grid">
+          <div class="psr-result-box">
+            <h5>Impacto Comercial / Financiero</h5>
+            <p>${project.psr.results.financial}</p>
           </div>
-          <div class="psr-results-grid">
-            <div class="psr-result-box">
-              <h5>Impacto Comercial / Financiero</h5>
-              <p>${project.psr.results.financial}</p>
-            </div>
-            <div class="psr-result-box">
-              <h5>Eficiencia Operativa</h5>
-              <p>${project.psr.results.operational}</p>
-            </div>
-            <div class="psr-result-box">
-              <h5>Rendimiento UX / Core Web Vitals</h5>
-              <p>${project.psr.results.ux}</p>
-            </div>
+          <div class="psr-result-box">
+            <h5>Eficiencia Operativa</h5>
+            <p>${project.psr.results.operational}</p>
+          </div>
+          <div class="psr-result-box">
+            <h5>Rendimiento UX / Core Web Vitals</h5>
+            <p>${project.psr.results.ux}</p>
           </div>
         </div>
+      </div>
 
-        <div class="psr-modal-footer">
-          <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
-            Explorar Proyecto en Producción ↗
-          </a>
-          <button class="btn btn-cyan-outline btn-sm" onclick="document.querySelector('#psrModal').classList.remove('open'); document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth' });">
-            Solicitar Auditoría Similar
-          </button>
-        </div>
-      `;
+      <div class="psr-modal-footer">
+        <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="btn btn-gold btn-sm">
+          Explorar Proyecto en Producción ↗
+        </a>
+        <button class="btn btn-cyan-outline btn-sm" onclick="document.querySelector('#psrModal').classList.remove('open'); document.body.style.overflow = ''; document.querySelector('#contacto').scrollIntoView({ behavior: 'smooth' });">
+          Solicitar Auditoría Similar
+        </button>
+      </div>
+    `;
 
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.querySelectorAll('.project-card').forEach(card => {
+    const btn = card.querySelector('.btn-case-psr');
+    const media = card.querySelector('.project-media-wrap');
+    const projectId = btn ? btn.getAttribute('data-project-id') : null;
+
+    if (btn && projectId) {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openProjectModal(projectId);
+      });
+    }
+
+    if (media && projectId) {
+      media.style.cursor = 'pointer';
+      media.setAttribute('title', 'Tocar para ver Caso PSR');
+      media.addEventListener('click', () => {
+        openProjectModal(projectId);
+      });
+    }
   });
 }
 
