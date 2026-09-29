@@ -1,0 +1,81 @@
+/* ==========================================================================
+   Acceso Digital Premium - Variables de Diseño & Sistema Cromático
+   Especificaciones del documento rector "Estructura De Portafolio Web Profesional"
+   ========================================================================== */
+
+:root {
+  /* --- Cromatismo Primario Estructural (Azul Marino Abisal & Fondos Profundos) --- */
+  --bg-abyssal-darkest: #040914;
+  --bg-abyssal-950: #060d1b;
+  --bg-abyssal-900: #081326;
+  --bg-abyssal-850: #0b1a35;
+  --bg-abyssal-800: #0e2145;
+  --bg-abyssal-700: #142d5c;
+
+  /* Superficies Glassmorphism */
+  --surface-card: rgba(11, 26, 53, 0.72);
+  --surface-card-hover: rgba(14, 33, 69, 0.88);
+  --surface-elevated: rgba(16, 38, 77, 0.85);
+  --surface-glass: rgba(8, 19, 38, 0.82);
+  --surface-input: rgba(6, 13, 27, 0.85);
+
+  /* --- Color de Interacción y Enfoque (Azul Eléctrico & Cían Láser) --- */
+  --accent-blue-electric: #0084ff;
+  --accent-cyan-laser: #00d2ff;
+  --accent-cyan-laser-light: #52e5ff;
+  --gradient-tech: linear-gradient(135deg, #0084ff 0%, #00d2ff 100%);
+  --glow-tech: rgba(0, 210, 255, 0.28);
+  --glow-electric: rgba(0, 132, 255, 0.35);
+
+  /* --- Color de Acento Distintivo (Oro Metálico Satén Prémium) --- */
+  --accent-gold-satin: #d4af37;
+  --accent-gold-bright: #f5c542;
+  --accent-gold-deep: #b38f29;
+  --accent-gold-subtle: rgba(212, 175, 55, 0.15);
+  --gradient-gold: linear-gradient(135deg, #f5c542 0%, #d4af37 50%, #aa821e 100%);
+  --gradient-gold-text: linear-gradient(135deg, #fff2be 0%, #f5c542 40%, #d4af37 80%);
+  --border-gold-subtle: rgba(212, 175, 55, 0.24);
+  --border-gold-active: rgba(245, 197, 66, 0.65);
+  --glow-gold: rgba(212, 175, 55, 0.32);
+
+  /* --- Jerarquía Tipográfica y Textos --- */
+  --text-pure: #ffffff;
+  --text-primary: #f0f4fc;
+  --text-secondary: #9cb1d1;
+  --text-muted: #647b9e;
+  --text-inverse: #050b14;
+
+  /* Bordes y Líneas Divisorias */
+  --border-subtle: rgba(100, 140, 190, 0.14);
+  --border-medium: rgba(100, 140, 190, 0.28);
+  --border-interactive: rgba(0, 210, 255, 0.4);
+
+  /* --- Fuentes Tipográficas --- */
+  --font-display: 'Space Grotesk', 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* --- Espaciado y Escala --- */
+  --container-max-width: 1280px;
+  --container-padding: 1.5rem;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* --- Sombras y Efectos --- */
+  --shadow-card: 0 16px 36px -10px rgba(0, 0, 0, 0.55), 0 0 0 1px var(--border-subtle);
+  --shadow-card-hover: 0 24px 48px -12px rgba(0, 0, 0, 0.7), 0 0 24px var(--glow-tech), 0 0 0 1px var(--border-interactive);
+  --shadow-gold-hover: 0 24px 48px -12px rgba(0, 0, 0, 0.75), 0 0 28px var(--glow-gold), 0 0 0 1px var(--border-gold-active);
+
+  /* --- Transiciones --- */
+  --transition-fast: 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Capas z-index */
+  --z-header: 1000;
+  --z-modal: 2000;
+  --z-widget: 1500;
+  --z-tooltip: 1100;
+}
