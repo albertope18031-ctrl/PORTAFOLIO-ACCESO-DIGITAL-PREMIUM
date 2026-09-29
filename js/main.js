@@ -85,7 +85,7 @@ function initProjectsGallery() {
 
       card.innerHTML = `
         <div class="project-media-wrap">
-          <img src="${project.logo}" alt="${project.title}" class="project-media-img" loading="lazy">
+          <img src="${project.logo}" alt="${project.title}" class="project-media-img" loading="lazy" decoding="async" width="960" height="524">
           <span class="project-category-tag">${project.categoryLabel}</span>
           <div class="project-live-indicator">
             <span class="live-dot"></span> En Producción

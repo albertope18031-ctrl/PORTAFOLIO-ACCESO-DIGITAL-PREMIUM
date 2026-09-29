@@ -12,7 +12,7 @@ const PROJECTS_DATA = [
     subtitle: "Portal Industrial Corporativo & Sistema de Suministros y Cotización por Volumen",
     metricHighlight: "+240%",
     metricLabel: "Incremento en cotizaciones B2B calificadas",
-    logo: "assets/clients/tm-solution.png",
+    logo: "assets/clients/tm-solution.webp",
     liveUrl: "https://www.tmsolutionmx.com.mx/",
     techStack: ["HTML5 / CSS3 Semántico", "Vanilla JS", "Arquitectura B2B", "SEO Industrial", "Vercel Edge"],
     secondaryMetrics: [
@@ -39,7 +39,7 @@ const PROJECTS_DATA = [
     subtitle: "Plataforma de Alta Conversión con Comparador Dinámico y Cotizador Inteligente",
     metricHighlight: "+145%",
     metricLabel: "Aumento en reserva de citas de alto valor",
-    logo: "assets/clients/aura-beauty.jpg",
+    logo: "assets/clients/aura-beauty.webp",
     liveUrl: "https://aura-beauty-dusky-phi.vercel.app/",
     techStack: ["UI/UX Prémium", "Cormorant & Jakarta Typography", "Comparador Antes/Después", "Cotizador Multi-Paso", "Vercel"],
     secondaryMetrics: [
@@ -66,7 +66,7 @@ const PROJECTS_DATA = [
     subtitle: "Landing Page de Alta Conversión Local & Asistencia Técnica Inmediata",
     metricHighlight: "+210%",
     metricLabel: "Incremento en leads técnicos calificados",
-    logo: "assets/clients/clima-pro.jpg",
+    logo: "assets/clients/clima-pro.webp",
     liveUrl: "https://climapro-chi.vercel.app/",
     techStack: ["Mobile-First Architecture", "WhatsApp Click-to-Chat API", "Local SEO Estratégico", "CSS Grid/Flexbox"],
     secondaryMetrics: [
@@ -93,7 +93,7 @@ const PROJECTS_DATA = [
     subtitle: "Plataforma de Menú Digital Disruptivo & Canal Propio de Pedidos Sin Comisiones",
     metricHighlight: "+180%",
     metricLabel: "Aumento en pedidos por canal propio",
-    logo: "assets/clients/loco-rooster.jpg",
+    logo: "assets/clients/loco-rooster.webp",
     liveUrl: "https://comida-web-gray.vercel.app/",
     techStack: ["UI Urbana & Microinteracciones", "Diseño Dark Sensorial", "Menú Modular Interactivo", "Vercel"],
     secondaryMetrics: [
@@ -120,7 +120,7 @@ const PROJECTS_DATA = [
     subtitle: "Portal Clínico & Sistema de Cualificación de Pacientes y Agendamiento",
     metricHighlight: "+85%",
     metricLabel: "Incremento en citas de valoración estética",
-    logo: "assets/clients/nova-smile.jpg",
+    logo: "assets/clients/nova-smile.webp",
     liveUrl: "https://novasmile-sigma.vercel.app/",
     techStack: ["Diseño Clínico Prémium", "Filtro de Especialidad", "Validación Médica", "Microinteracciones"],
     secondaryMetrics: [
@@ -147,7 +147,7 @@ const PROJECTS_DATA = [
     subtitle: "Menú Digital Interactivo de Alto Apetito & Experiencia Smokehouse QR",
     metricHighlight: "+35%",
     metricLabel: "Aumento en ticket promedio de consumo",
-    logo: "assets/clients/ahumados-carbon.jpg",
+    logo: "assets/clients/ahumados-carbon.webp",
     liveUrl: "https://ahumados-carbon-smokehouse.vercel.app/",
     techStack: ["Dark Gastronomy UI", "Optimización QR In-Venue", "Microanimaciones CSS", "Mobile-First"],
     secondaryMetrics: [
