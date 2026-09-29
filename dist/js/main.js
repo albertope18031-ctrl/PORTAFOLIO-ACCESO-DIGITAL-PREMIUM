@@ -456,19 +456,17 @@ function initWhatsAppWidget() {
 
   function togglePopover(e) {
     if (e) e.stopPropagation();
+    const willOpen = !popover.classList.contains('open');
     popover.classList.toggle('open');
+    if (willOpen) {
+      logEvent('whatsapp_abrir_popup');
+    }
   }
 
-  trigger.addEventListener('click', (e) => {
-    logEvent('click_whatsapp');
-    togglePopover(e);
-  });
+  trigger.addEventListener('click', togglePopover);
 
   if (floatingLabel) {
-    floatingLabel.addEventListener('click', (e) => {
-      logEvent('click_whatsapp');
-      togglePopover(e);
-    });
+    floatingLabel.addEventListener('click', togglePopover);
   }
 
   if (sendBtn) {
