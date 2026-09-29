@@ -3,15 +3,19 @@
  * Arquitectura de Conversión, Filtrado PSR, Embudo Progresivo y Modales Legales
  */
 
-// Utilidad universal para registrar eventos con @vercel/analytics
+// Utilidad universal para registrar eventos con Google Analytics 4 y @vercel/analytics
 function logEvent(name, data) {
   try {
     if (typeof window !== 'undefined' && typeof window.logEvent === 'function') {
       window.logEvent(name, data);
-    } else if (typeof window !== 'undefined' && typeof window.va === 'function') {
-      window.va('event', { name, data });
     } else {
-      console.log(`[Vercel Analytics Track] ${name}:`, data || {});
+      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+        window.gtag('event', name, data || {});
+      }
+      if (typeof window !== 'undefined' && typeof window.va === 'function') {
+        window.va('event', { name, data });
+      }
+      console.log(`[Analytics Track] ${name}:`, data || {});
     }
   } catch (err) {
     console.warn('[Analytics Error]', err);
